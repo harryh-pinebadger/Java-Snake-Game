@@ -59,6 +59,7 @@ public class Board extends JPanel implements ActionListener {
     Container con;
     JPanel buttonPanel;
     JButton replayButton;
+    ButtonHandler bHandler = new ButtonHandler();
 
     public Board() {
         
@@ -172,8 +173,11 @@ public class Board extends JPanel implements ActionListener {
         g.setFont(medeum);
         g.drawString(msg1, (B_WIDTH - metr.stringWidth(msg1)) / 2, B_HEIGHT / 2);
         //Added for replay button
+        replayButton1();
+    }
+    private void replayButton1() {
         window = new JFrame();
-        window.setSize(300,300);
+        window.setSize(250,250);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().setBackground(Color.black);
         window.setLayout(null);
@@ -181,12 +185,13 @@ public class Board extends JPanel implements ActionListener {
         window.setVisible(true);
         
         buttonPanel = new JPanel();
-        buttonPanel.setBounds(300, 300, 200, 100);
-        buttonPanel.setBackground(Color.blue);
+        buttonPanel.setBounds(30, 30, 200, 100);
+        buttonPanel.setBackground(Color.black);
         con.add(buttonPanel);
         
         replayButton = new JButton("Replay");
         replayButton.setFocusPainted(false);
+        replayButton.addActionListener(bHandler);
         buttonPanel.add(replayButton);
     }
 
@@ -357,5 +362,11 @@ public class Board extends JPanel implements ActionListener {
                 leftDirection = false;
             }
         }
+    }
+    public class ButtonHandler implements ActionListener{
+    	public void actionPerformed(ActionEvent event) {
+    		replayGame();
+    	}
+    	
     }
 }
