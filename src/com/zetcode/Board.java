@@ -15,6 +15,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.util.*;
+//added for replay button
+import java.awt.Container;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
 
 public class Board extends JPanel implements ActionListener {
 
@@ -49,6 +54,11 @@ public class Board extends JPanel implements ActionListener {
     private Image pApple;
     
     private Image head;
+    //Added for replay button
+    JFrame window;
+    Container con;
+    JPanel buttonPanel;
+    JButton replayButton;
 
     public Board() {
         
@@ -130,9 +140,24 @@ public class Board extends JPanel implements ActionListener {
         }else {
 
             gameOver(g);
+            //replayGame();
         }        
     }
-
+    private void replayGame() {
+    	if(!inGame) {
+    		initBoard();
+    		leftDirection = false;
+    	    rightDirection = true;
+    	    upDirection = false;
+    	    downDirection = false;
+    	    inGame = true;
+    	    score = 0;
+    	    pApples_x.clear();
+    	    pApples_y.clear();
+    	    pAppleI = 1;
+    	    locatepApple();
+    	}
+    }
     private void gameOver(Graphics g) {
         
         String msg = "Game Over - Too Bad!!!";
@@ -146,6 +171,23 @@ public class Board extends JPanel implements ActionListener {
         g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 3);
         g.setFont(medeum);
         g.drawString(msg1, (B_WIDTH - metr.stringWidth(msg1)) / 2, B_HEIGHT / 2);
+        //Added for replay button
+        window = new JFrame();
+        window.setSize(300,300);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.getContentPane().setBackground(Color.black);
+        window.setLayout(null);
+        con = window.getContentPane();
+        window.setVisible(true);
+        
+        buttonPanel = new JPanel();
+        buttonPanel.setBounds(300, 300, 200, 100);
+        buttonPanel.setBackground(Color.blue);
+        con.add(buttonPanel);
+        
+        replayButton = new JButton("Replay");
+        replayButton.setFocusPainted(false);
+        buttonPanel.add(replayButton);
     }
 
     private void checkApple() {
